@@ -7,6 +7,7 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { ScrollArea } from '@/components/ui/scroll-area'
+import Navbar from '@/components/molecules/navbar'
 
 interface Book {
   id: number
@@ -53,40 +54,47 @@ const books: Book[] = [
 
 const BookList: React.FC = () => {
   return (
-    <div className="flex justify-center min-h-screen bg-gray-900 p-6">
-      <Card className="w-full max-w-4xl bg-gray-800 text-gray-100">
-        <CardHeader>
-          <CardTitle className="text-2xl font-bold text-center">
-            Catálogo de libros
-          </CardTitle>
-          <CardDescription className="text-center text-gray-400">
-            Explora nuestra colección de clásicos literarios
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <ScrollArea className="h-[70vh]">
-            <div className="space-y-4">
-              {books.map((book) => (
-                <Link to={`/books/${book.id}`} key={book.id} className="block">
-                  <Card className="bg-gray-700 transition-colors hover:bg-gray-600 cursor-pointer">
-                    <CardHeader>
-                      <CardTitle className="text-xl text-gray-100">
-                        {book.title}
-                      </CardTitle>
-                      <CardDescription className="text-gray-300">
-                        por {book.author}
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-gray-400">{book.description}</p>
-                    </CardContent>
-                  </Card>
-                </Link>
-              ))}
-            </div>
-          </ScrollArea>
-        </CardContent>
-      </Card>
+    <div className="min-h-screen bg-gray-900 flex flex-col">
+      <Navbar />
+      <main className="flex-grow flex items-center justify-center p-4">
+        <Card className="w-full max-w-4xl bg-gray-800 text-gray-100">
+          <CardHeader>
+            <CardTitle className="text-2xl font-bold text-center">
+              Catálogo de libros
+            </CardTitle>
+            <CardDescription className="text-center text-gray-400">
+              Explora nuestra colección de clásicos literarios
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ScrollArea className="h-[70vh]">
+              <div className="space-y-4">
+                {books.map((book) => (
+                  <Link
+                    to={`/books/${book.id}`}
+                    key={book.id}
+                    className="block"
+                  >
+                    <Card className="bg-gray-700 transition-colors hover:bg-gray-600 cursor-pointer">
+                      <CardHeader>
+                        <CardTitle className="text-xl text-gray-100">
+                          {book.title}
+                        </CardTitle>
+                        <CardDescription className="text-gray-300">
+                          por {book.author}
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-gray-400">{book.description}</p>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                ))}
+              </div>
+            </ScrollArea>
+          </CardContent>
+        </Card>
+      </main>
     </div>
   )
 }
