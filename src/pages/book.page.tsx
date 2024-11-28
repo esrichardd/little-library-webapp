@@ -1,54 +1,91 @@
-import React, { useState } from 'react'
-import { Card } from '@/components/ui/card'
-import { useLocation, useParams } from 'react-router-dom'
+import { useState } from 'react'
+import { ChevronLeft, ChevronRight, BookOpen } from 'lucide-react'
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { ScrollArea } from '@/components/ui/scroll-area'
+import { useNavigate } from 'react-router-dom'
 
 const book = {
   id: '1',
   title: 'El principito',
   author: 'Antoine de Saint-Exupéry',
   pages: [
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.',
-    'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.',
+    'Lorem ipsum dolor sit amet. '.repeat(25).trim(),
+    'Sed ut perspiciatis unde omnis iste natus error sit '.repeat(10).trim(),
+    'At vero eos et accusamus et iusto odio dignissimos. '.repeat(10).trim(),
   ],
 }
 
-const BookPage: React.FC = () => {
-  const { id } = useParams()
-  const location = useLocation()
-  const queryParams = new URLSearchParams(location.search)
-  const initialPage = parseInt(queryParams.get('page') || '1', 10) - 1
-  const [currentPage, setCurrentPage] = useState(initialPage)
+export default function BookViewer() {
+  const navigate = useNavigate()
+  const [currentPage, setCurrentPage] = useState(0)
 
-  const handleNextPage = () => {
-    setCurrentPage((prevPage) => (prevPage + 1) % book.pages.length)
+  const goToPreviousPage = () => {
+    setCurrentPage((prev) => Math.max(0, prev - 1))
   }
 
-  const handlePreviousPage = () => {
-    setCurrentPage(
-      (prevPage) => (prevPage - 1 + book.pages.length) % book.pages.length
-    )
+  const goToNextPage = () => {
+    setCurrentPage((prev) => Math.min(book.pages.length - 1, prev + 1))
+  }
+
+  const goToCatalog = () => {
+    navigate('/books')
   }
 
   return (
-    <div className="flex justify-center min-h-screen bg-gray-900 p-6">
-      <Card className="w-full max-w-4xl bg-white text-gray-100">
-        <p className="text-gray-900">{book.pages[currentPage]}</p>
-        <button
-          onClick={handlePreviousPage}
-          className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
+    <div className="min-h-screen bg-gray-900 flex items-center justify-center p-4">
+      <Card
+        className="w-full max-w-2xl bg-white flex flex-col relative"
+        style={{ height: '80vh' }}
+      >
+        <Button
+          onClick={goToCatalog}
+          variant="outline"
+          className="absolute top-4 right-4 text-gray-800 border-gray-300 hover:bg-gray-100"
         >
-          Página anterior
-        </button>
-        <button
-          onClick={handleNextPage}
-          className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
-        >
-          Siguiente página
-        </button>
+          <BookOpen className="mr-2 h-4 w-4" /> Ir al catálogo
+        </Button>
+        <CardHeader className="pt-16">
+          <CardTitle className="text-2xl font-bold text-center text-gray-800">
+            {book.title}
+          </CardTitle>
+          <p className="text-center text-gray-600">{book.author}</p>
+        </CardHeader>
+        <CardContent className="flex-grow overflow-hidden">
+          <ScrollArea className="h-full">
+            <p className="text-lg text-gray-800 p-6">
+              {book.pages[currentPage]}
+            </p>
+          </ScrollArea>
+        </CardContent>
+        <CardFooter className="flex justify-between mt-auto">
+          <Button
+            onClick={goToPreviousPage}
+            disabled={currentPage === 0}
+            variant="outline"
+            className="text-gray-800 border-gray-300 hover:bg-gray-100"
+          >
+            <ChevronLeft className="mr-2 h-4 w-4" /> Anterior
+          </Button>
+          <span className="text-sm text-gray-600">
+            Página {currentPage + 1} de {book.pages.length}
+          </span>
+          <Button
+            onClick={goToNextPage}
+            disabled={currentPage === book.pages.length - 1}
+            variant="outline"
+            className="text-gray-800 border-gray-300 hover:bg-gray-100"
+          >
+            Siguiente <ChevronRight className="ml-2 h-4 w-4" />
+          </Button>
+        </CardFooter>
       </Card>
     </div>
   )
 }
-
-export default BookPage
