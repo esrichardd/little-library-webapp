@@ -1,8 +1,7 @@
-// src/components/PrivateRoute.tsx
 import React from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
 
-const PrivateRoute: React.FC = () => {
+export const PrivateRoute: React.FC = () => {
   const isAuthenticated = true
 
   if (!isAuthenticated) {
@@ -11,5 +10,3 @@ const PrivateRoute: React.FC = () => {
 
   return <Outlet />
 }
-
-export default PrivateRoute

@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Button } from '@/components/ui/button'
+import { Input } from '@/presentation/components/ui/input'
+import { Label } from '@/presentation/components/ui/label'
+import { Button } from '@/presentation/components/ui/button'
 import {
   Card,
   CardContent,
@@ -10,9 +10,9 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card'
+} from '@/presentation/components/ui/card'
 
-const Login: React.FC = () => {
+export const LoginPage: React.FC = () => {
   const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -22,7 +22,7 @@ const Login: React.FC = () => {
     console.log('Email:', email)
     console.log('Password:', password)
 
-    navigate('/books')
+    navigate('/catalog')
   }
 
   return (
@@ -79,5 +79,3 @@ const Login: React.FC = () => {
     </div>
   )
 }
-
-export default Login

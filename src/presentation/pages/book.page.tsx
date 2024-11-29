@@ -6,10 +6,10 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { ScrollArea } from '@/components/ui/scroll-area'
-import Navbar from '@/components/molecules/navbar'
+} from '@/presentation/components/ui/card'
+import { Button } from '@/presentation/components/ui/button'
+import { ScrollArea } from '@/presentation/components/ui/scroll-area'
+import { Navbar } from '@/presentation/components/molecules/navbar'
 
 const book = {
   id: '1',
@@ -22,7 +22,7 @@ const book = {
   ],
 }
 
-export default function BookViewer() {
+export const BookPage: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(0)
 
   const goToPreviousPage = () => {

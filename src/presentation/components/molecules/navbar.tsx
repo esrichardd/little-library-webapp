@@ -1,18 +1,18 @@
 import { useNavigate } from 'react-router-dom'
 import { BookOpen, LogOut, Menu } from 'lucide-react'
-import { Button } from '../ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
+} from '@/presentation/components/ui/dropdown-menu'
+import { Button } from '@/presentation/components/ui/button'
 
-const Navbar: React.FC = () => {
+export const Navbar: React.FC = () => {
   const navigate = useNavigate()
 
   const goToCatalog = () => {
-    navigate('/books')
+    navigate('/catalog')
   }
 
   const logout = () => {
@@ -61,5 +61,3 @@ const Navbar: React.FC = () => {
     </header>
   )
 }
-
-export default Navbar

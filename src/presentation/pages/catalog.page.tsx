@@ -5,9 +5,9 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card'
-import { ScrollArea } from '@/components/ui/scroll-area'
-import Navbar from '@/components/molecules/navbar'
+} from '@/presentation/components/ui/card'
+import { ScrollArea } from '@/presentation/components/ui/scroll-area'
+import { Navbar } from '@/presentation/components/molecules/navbar'
 
 interface Book {
   id: number
@@ -52,7 +52,7 @@ const books: Book[] = [
   },
 ]
 
-const BookList: React.FC = () => {
+export const CatalogPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-900 flex flex-col">
       <Navbar />
@@ -70,11 +70,7 @@ const BookList: React.FC = () => {
             <ScrollArea className="h-[70vh]">
               <div className="space-y-4">
                 {books.map((book) => (
-                  <Link
-                    to={`/books/${book.id}`}
-                    key={book.id}
-                    className="block"
-                  >
+                  <Link to={`/book/${book.id}`} key={book.id} className="block">
                     <Card className="bg-gray-700 transition-colors hover:bg-gray-600 cursor-pointer">
                       <CardHeader>
                         <CardTitle className="text-xl text-gray-100">
@@ -98,5 +94,3 @@ const BookList: React.FC = () => {
     </div>
   )
 }
-
-export default BookList
