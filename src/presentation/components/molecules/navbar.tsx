@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { BookOpen, LogOut, Menu } from 'lucide-react'
+import { useAuth } from '@/application/contexts'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,13 +11,10 @@ import { Button } from '@/presentation/components/ui/button'
 
 export const Navbar: React.FC = () => {
   const navigate = useNavigate()
+  const { logout } = useAuth()
 
   const goToCatalog = () => {
     navigate('/catalog')
-  }
-
-  const logout = () => {
-    navigate('/login')
   }
 
   return (

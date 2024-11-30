@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '@/application/contexts'
 import { Input } from '@/presentation/components/ui/input'
 import { Label } from '@/presentation/components/ui/label'
 import { Button } from '@/presentation/components/ui/button'
@@ -16,12 +17,11 @@ export const LoginPage: React.FC = () => {
   const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-
+  const { login } = useAuth()
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log('Email:', email)
-    console.log('Password:', password)
 
+    login(email, password)
     navigate('/catalog')
   }
 

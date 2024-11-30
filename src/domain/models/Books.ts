@@ -3,6 +3,7 @@ export type CatalogBook = {
   title: string
   author: string
   pages: number
+  description: string
   averageReadingTimeMs: number
 }
 
