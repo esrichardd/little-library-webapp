@@ -1,3 +1,7 @@
+import { useGetBooksQuery } from '@/infraestructure/services'
+import { Navbar } from '@/presentation/components/molecules/navbar'
+import { BookCard } from '@/presentation/components/molecules/book-card'
+import { ScrollArea } from '@/presentation/components/ui/scroll-area'
 import {
   Card,
   CardContent,
@@ -5,10 +9,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/presentation/components/ui/card'
-import { ScrollArea } from '@/presentation/components/ui/scroll-area'
-import { Navbar } from '@/presentation/components/molecules/navbar'
-import { BookCard } from '@/presentation/components/molecules/BookCard'
-import { useGetBooksQuery } from '@/infraestructure/services'
 
 export const CatalogPage: React.FC = () => {
   const { data } = useGetBooksQuery()

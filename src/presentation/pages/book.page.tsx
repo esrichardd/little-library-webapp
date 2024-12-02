@@ -1,7 +1,9 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useGetBookByIdQuery } from '@/infraestructure/services'
+import { useDispatch } from 'react-redux'
+import { addReadingTime } from '@/application/slices/reading-time'
 import {
   Card,
   CardContent,
@@ -15,8 +17,27 @@ import { Navbar } from '@/presentation/components/molecules/navbar'
 
 export const BookPage: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(0)
+  const [startTime, setStartTime] = useState<number | null>(null)
+  const dispatch = useDispatch()
   const { id } = useParams()
   const { data: book } = useGetBookByIdQuery(Number(id))
+
+  useEffect(() => {
+    setStartTime(Date.now())
+
+    return () => {
+      if (startTime !== null && book) {
+        const timeSpent = Date.now() - startTime
+        dispatch(
+          addReadingTime({
+            bookId: book.id,
+            page: currentPage,
+            time: timeSpent,
+          })
+        )
+      }
+    }
+  }, [currentPage, dispatch, book])
 
   const goToPreviousPage = () => {
     setCurrentPage((prev) => Math.max(0, prev - 1))
