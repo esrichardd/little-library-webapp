@@ -1,4 +1,4 @@
-import { useGetBooksQuery } from '@/infraestructure/services'
+import { useGetBooksQuery } from '@/infraestructure/repository'
 import { Navbar } from '@/presentation/components/molecules/navbar'
 import { BookCard } from '@/presentation/components/molecules/book-card'
 import { ScrollArea } from '@/presentation/components/ui/scroll-area'

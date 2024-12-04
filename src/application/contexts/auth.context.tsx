@@ -6,23 +6,16 @@ import {
   ReactNode,
 } from 'react'
 import Cookies from 'js-cookie'
+import { useAuthService } from '@/application/services'
 import { User } from '@/domain/models'
-import { useLoginMutation } from '@/infraestructure/services'
-
-type AuthContextType = {
-  user: User | null
-  token: string | null
-  login: (email: string, password: string) => Promise<void>
-  logout: () => void
-  isAuthenticated: boolean
-}
+import { AuthContextType } from './types'
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null)
   const [token, setToken] = useState<string | null>(null)
-  const [loginMutation] = useLoginMutation()
+  const { login, logout } = useAuthService()
 
   useEffect(() => {
     const storedToken = Cookies.get('authorization-token')
@@ -39,9 +32,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [token])
 
-  const login = async (email: string, password: string) => {
+  const handleLogin = async (email: string, password: string) => {
     try {
-      const loggedInUser = await loginMutation({ email, password }).unwrap()
+      const loggedInUser = await login(email, password)
       setUser(loggedInUser)
       setToken(loggedInUser.token)
     } catch (error) {
@@ -50,10 +43,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   }
 
-  const logout = () => {
+  const handleLogout = () => {
+    logout()
     setUser(null)
     setToken(null)
-    Cookies.remove('authorization-token')
   }
 
   return (
@@ -61,8 +54,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       value={{
         user,
         token,
-        login,
-        logout,
+        login: handleLogin,
+        logout: handleLogout,
         isAuthenticated: !!token,
       }}
     >

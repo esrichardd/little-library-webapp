@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { useGetBookByIdQuery } from '@/infraestructure/services'
+import { useGetBookByIdQuery } from '@/infraestructure/repository'
 import { useDispatch } from 'react-redux'
 import { addReadingTime } from '@/application/slices/reading-time'
 import {

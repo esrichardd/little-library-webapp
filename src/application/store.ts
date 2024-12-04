@@ -1,17 +1,20 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { authApiService, booksApiService } from '@/infraestructure/services'
+import {
+  authApiRepository,
+  booksApiRepository,
+} from '@/infraestructure/repository'
 import readingTimeReducer from './slices/reading-time'
 
 export const store = configureStore({
   reducer: {
-    [authApiService.reducerPath]: authApiService.reducer,
-    [booksApiService.reducerPath]: booksApiService.reducer,
+    [authApiRepository.reducerPath]: authApiRepository.reducer,
+    [booksApiRepository.reducerPath]: booksApiRepository.reducer,
     readingTime: readingTimeReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
-      authApiService.middleware,
-      booksApiService.middleware
+      authApiRepository.middleware,
+      booksApiRepository.middleware
     ),
 })
 
