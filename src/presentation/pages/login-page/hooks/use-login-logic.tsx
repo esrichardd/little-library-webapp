@@ -6,6 +6,7 @@ export const useLoginLogic = () => {
   const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [loading, setLoading] = useState(false)
   const { login } = useAuth()
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -20,10 +21,13 @@ export const useLoginLogic = () => {
     e.preventDefault()
 
     try {
+      setLoading(true)
       await login(email, password)
       navigate('/catalog')
     } catch (error) {
       console.error('Login failed', error)
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -33,5 +37,6 @@ export const useLoginLogic = () => {
     handleEmailChange,
     handlePasswordChange,
     handleSubmit,
+    loading,
   }
 }

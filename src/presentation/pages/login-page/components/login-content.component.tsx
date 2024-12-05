@@ -1,3 +1,4 @@
+import { Loader2 } from 'lucide-react'
 import { Input } from '@/presentation/components/ui/input'
 import { Label } from '@/presentation/components/ui/label'
 import { Button } from '@/presentation/components/ui/button'
@@ -16,6 +17,7 @@ interface LoginContentProps {
   onEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   onPasswordChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
+  loading: boolean
 }
 
 export const LoginContent: React.FC<LoginContentProps> = ({
@@ -24,6 +26,7 @@ export const LoginContent: React.FC<LoginContentProps> = ({
   onEmailChange,
   onPasswordChange,
   onSubmit,
+  loading,
 }) => {
   return (
     <Card className="w-full max-w-md bg-gray-800 text-gray-100 mx-4 sm:mx-0">
@@ -69,8 +72,9 @@ export const LoginContent: React.FC<LoginContentProps> = ({
           <Button
             type="submit"
             className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+            disabled={loading}
           >
-            Iniciar sesión
+            {loading ? <Loader2 className="animate-spin" /> : 'Iniciar sesión'}
           </Button>
         </CardFooter>
       </form>

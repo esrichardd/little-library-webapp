@@ -8,6 +8,7 @@ export const LoginPage: React.FC = () => {
     handleEmailChange,
     handlePasswordChange,
     handleSubmit,
+    loading,
   } = useLoginLogic()
 
   return (
@@ -18,6 +19,7 @@ export const LoginPage: React.FC = () => {
         onEmailChange={handleEmailChange}
         onPasswordChange={handlePasswordChange}
         onSubmit={handleSubmit}
+        loading={loading}
       />
     </div>
   )
