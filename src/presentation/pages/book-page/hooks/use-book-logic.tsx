@@ -2,10 +2,12 @@ import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { useGetBookByIdQuery } from '@/infraestructure/repository'
+import { useAuth } from '@/application/contexts/auth.context'
 import { addReadingTime } from '@/application/slices/reading-time'
 
 export const useBookLogic = () => {
-  const [currentPage, setCurrentPage] = useState(0)
+  const { user } = useAuth()
+  const [currentPage, setCurrentPage] = useState<number>(0)
   const [startTime, setStartTime] = useState<number | null>(null)
   const dispatch = useDispatch()
   const { id } = useParams()
@@ -14,28 +16,33 @@ export const useBookLogic = () => {
   useEffect(() => {
     setStartTime(Date.now())
 
-    return () => {
-      if (startTime !== null && book) {
-        const timeSpent = Date.now() - startTime
-        dispatch(
-          addReadingTime({
-            bookId: book.id,
-            page: currentPage,
-            time: timeSpent,
-          })
-        )
-      }
+    if (startTime !== null && book) {
+      const timeSpent = Date.now() - startTime
+      console.log('Gatillar Evento a Ecosistema con la siguiente data', {
+        userId: user?.id,
+        bookId: book.id,
+        page: currentPage,
+        time: timeSpent,
+      })
+
+      dispatch(
+        addReadingTime({
+          bookId: book.id,
+          page: currentPage,
+          time: timeSpent,
+        })
+      )
     }
-  }, [currentPage, dispatch, book])
+  }, [currentPage, book])
 
   const goToPreviousPage = () => {
     setCurrentPage((prev) => Math.max(0, prev - 1))
   }
 
   const goToNextPage = () => {
-    setCurrentPage((prev) =>
-      book?.pages ? Math.min(book.pages.length - 1, prev + 1) : 0
-    )
+    setCurrentPage((prev) => {
+      return book?.pages ? Math.min(book.pages.length - 1, prev + 1) : 0
+    })
   }
 
   return {

@@ -6,8 +6,8 @@ import {
   CardHeader,
   CardTitle,
 } from '@/presentation/components/ui/card'
-import { BookPageNavigation } from './book-navigation.component'
 import { Skeleton } from '@/presentation/components/ui/skeleton'
+import { BookPageNavigation } from './book-navigation.component'
 
 interface BookPageContentProps {
   book: any
