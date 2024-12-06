@@ -1,5 +1,6 @@
 import { CatalogBook } from '@/domain/models'
 import { BookCard } from '@/presentation/components/molecules/book-card'
+import { BookCardSkeleton } from '@/presentation/components/molecules/book-card-skeleton'
 import { ScrollArea } from '@/presentation/components/ui/scroll-area'
 import {
   Card,
@@ -31,9 +32,13 @@ export const CatalogContent: React.FC<CatalogContentProps> = ({
       <CardContent>
         <ScrollArea className="h-[70vh]">
           <div className="space-y-4">
-            {books?.map((book) => (
-              <BookCard book={book} key={book.id} isLoading={isLoading} />
-            ))}
+            {isLoading
+              ? Array.from({ length: 5 }).map((_, index) => (
+                  <BookCardSkeleton key={index} />
+                ))
+              : books?.map((book) => (
+                  <BookCard book={book} key={book.id} isLoading={isLoading} />
+                ))}
           </div>
         </ScrollArea>
       </CardContent>
