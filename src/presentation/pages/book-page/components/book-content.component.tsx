@@ -7,12 +7,14 @@ import {
   CardTitle,
 } from '@/presentation/components/ui/card'
 import { BookPageNavigation } from './book-navigation.component'
+import { Skeleton } from '@/presentation/components/ui/skeleton'
 
 interface BookPageContentProps {
   book: any
   currentPage: number
   onPreviousPage: () => void
   onNextPage: () => void
+  isLoading: boolean
 }
 
 export const BookPageContent: React.FC<BookPageContentProps> = ({
@@ -20,6 +22,7 @@ export const BookPageContent: React.FC<BookPageContentProps> = ({
   currentPage,
   onPreviousPage,
   onNextPage,
+  isLoading,
 }) => {
   return (
     <Card
@@ -28,14 +31,20 @@ export const BookPageContent: React.FC<BookPageContentProps> = ({
     >
       <CardHeader>
         <CardTitle className="text-2xl font-bold text-center text-gray-800">
-          {book?.title}
+          {isLoading ? <Skeleton className="w-full h-4" /> : book?.title}
         </CardTitle>
-        <p className="text-center text-gray-600">{book?.author}</p>
+        <p className="text-center text-gray-600">
+          {isLoading ? <Skeleton className="w-full h-4" /> : book?.author}
+        </p>
       </CardHeader>
       <CardContent className="flex-grow overflow-hidden">
         <ScrollArea className="h-full">
           <p className="text-lg text-gray-800 p-6">
-            {book?.pages[currentPage]}
+            {isLoading ? (
+              <Skeleton className="w-full h-4" />
+            ) : (
+              book?.pages[currentPage]
+            )}
           </p>
         </ScrollArea>
       </CardContent>

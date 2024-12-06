@@ -9,7 +9,7 @@ export const useBookLogic = () => {
   const [startTime, setStartTime] = useState<number | null>(null)
   const dispatch = useDispatch()
   const { id } = useParams()
-  const { data: book } = useGetBookByIdQuery(Number(id))
+  const { data: book, isLoading } = useGetBookByIdQuery(Number(id))
 
   useEffect(() => {
     setStartTime(Date.now())
@@ -40,6 +40,7 @@ export const useBookLogic = () => {
 
   return {
     book,
+    isLoading,
     currentPage,
     goToPreviousPage,
     goToNextPage,

@@ -3,7 +3,8 @@ import { useBookLogic } from './hooks/use-book-logic'
 import { BookPageContent } from './components'
 
 export const BookPage: React.FC = () => {
-  const { book, currentPage, goToPreviousPage, goToNextPage } = useBookLogic()
+  const { book, currentPage, goToPreviousPage, goToNextPage, isLoading } =
+    useBookLogic()
 
   return (
     <div className="min-h-screen bg-gray-900 flex flex-col">
@@ -14,6 +15,7 @@ export const BookPage: React.FC = () => {
           currentPage={currentPage}
           onPreviousPage={goToPreviousPage}
           onNextPage={goToNextPage}
+          isLoading={isLoading}
         />
       </main>
     </div>
